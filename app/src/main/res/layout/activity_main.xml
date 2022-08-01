@@ -4,30 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <EditText
-        android:layout_marginTop="50dp"
-        android:id="@+id/id_text"
-        android:hint="github id를 입력하세요!"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/search_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="검색"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black"/>
+    <LinearLayout
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <EditText
+            android:layout_weight="7"
+            android:id="@+id/id_text"
+            android:hint="github 유저 아이디를 입력하세요."
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_weight="3"
+            android:id="@+id/search_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="검색"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/black"/>
+    </LinearLayout>
 
-    <TextView
-        android:textSize="30sp"
+    <ImageView
+        android:id="@+id/profile_image"
         android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:id="@+id/id_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"/>
 
     <TextView
-        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
         android:gravity="center"
         android:id="@+id/login_result"
         android:layout_width="match_parent"

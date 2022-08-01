@@ -5,18 +5,21 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Path
 import java.lang.reflect.Type
 
 interface GitHubAPIService {
-    @GET("/users/{login}")
+    @GET("/users/{userId}")
     fun getUser(
-        @Path("login") login : String
+        @Path("userId") login: String,
+        @Header("Authorization") pat : String
     ): Call<GithubResponseGSON>
 }
 
-data class GithubResponseGSON(val id : Int, val login : String)
+data class GithubResponseGSON(val id : Int, val login : String, val name : String?, var followers : Int, var following : Int, val avatar_url : String)
 
+/*
 class GithubResponseDeserializerGSON : JsonDeserializer<GithubResponseGSON> {
     override fun deserialize(
         json: JsonElement?,
@@ -33,4 +36,4 @@ class GithubResponseDeserializerGSON : JsonDeserializer<GithubResponseGSON> {
         )
     }
 
-}
+}*/
