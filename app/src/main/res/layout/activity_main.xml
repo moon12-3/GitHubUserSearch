@@ -25,6 +25,14 @@
             android:backgroundTint="@color/black"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/save_list_btn"
+        android:text="유저 저장소 검색"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <ImageView
         android:id="@+id/profile_image"
         android:layout_marginTop="30dp"
@@ -40,12 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/save_list_btn"
-        android:text="유저 저장소 검색"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>

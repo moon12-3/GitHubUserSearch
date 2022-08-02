@@ -21,6 +21,7 @@ class GitHubUserRepositoryListActivity : AppCompatActivity() {
 
 
         val id = intent.getStringExtra("id")!!
+        val TOKEN = intent.getStringExtra("token")!!
 
         Toast.makeText(this, "id : $id", Toast.LENGTH_SHORT).show()
 
@@ -32,7 +33,6 @@ class GitHubUserRepositoryListActivity : AppCompatActivity() {
             .build()
         val apiService = retrofit.create(GitHubAPIService::class.java)
 
-        val TOKEN = "token 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"
         val apiCallForData = apiService.getRepos(id, TOKEN)
 
         apiCallForData.enqueue(object : Callback<List<GithubRepos>> {
@@ -40,23 +40,20 @@ class GitHubUserRepositoryListActivity : AppCompatActivity() {
 
                 val errorId = response.code().toString()
 
-                if(errorId.startsWith("4"))
-                    Toast.makeText(this@GitHubUserRepositoryListActivity, "유저가 없습니다.", Toast.LENGTH_SHORT).show()
-                else {
-                    val data = response.body()
-                    val reposList = mutableListOf<GithubRepos>()
-                    for(i in 0 until data!!.size) reposList.add(data.get(i))
+                val data = response.body()
+                val reposList = mutableListOf<GithubRepos>()
+                for(i in 0 until data!!.size) reposList.add(data.get(i))
 
-                    val layoutManager = LinearLayoutManager(this@GitHubUserRepositoryListActivity)
+                val layoutManager = LinearLayoutManager(this@GitHubUserRepositoryListActivity)
 
-                    val adapter = ReposAdapter(data)
+                val adapter = ReposAdapter(data)
 
-                    val recyclerView = findViewById<RecyclerView>(R.id.repos_list)
+                val recyclerView = findViewById<RecyclerView>(R.id.repos_list)
 
-                    recyclerView.setHasFixedSize(false)
-                    recyclerView.layoutManager = layoutManager
-                    recyclerView.adapter = adapter
-                }
+                recyclerView.setHasFixedSize(false)
+                recyclerView.layoutManager = layoutManager
+                recyclerView.adapter = adapter
+
             }
 
             override fun onFailure(call: Call<List<GithubRepos>>, t: Throwable) {

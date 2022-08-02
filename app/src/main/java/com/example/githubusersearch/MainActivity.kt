@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.google.gson.GsonBuilder
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         val profileImg = findViewById<ImageView>(R.id.profile_image)
         val saveListBtn = findViewById<Button>(R.id.save_list_btn)
 
+        saveListBtn.visibility = View.GONE
+
+        val TOKEN = "token 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"
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.github.com")
             .addConverterFactory(
@@ -42,14 +47,18 @@ class MainActivity : AppCompatActivity() {
         // val classInfo : Class<GitHubAPIService> = GitHubAPIService::class.java 해당 클래스 정보를 얻을 수 있다??
 
         saveListBtn.setOnClickListener {
-            val intent = Intent(this, GitHubUserRepositoryListActivity::class.java)
-            intent.putExtra("id", userIdText.text.toString())
-            startActivity(intent)
+            if(userIdText.text.toString().isBlank())
+                Toast.makeText(this, "유저 아이디를 입력하세요.", Toast.LENGTH_SHORT).show()
+            else {
+                val intent = Intent(this, GitHubUserRepositoryListActivity::class.java)
+                intent.putExtra("id", userIdText.text.toString())
+                intent.putExtra("token", TOKEN)
+                startActivity(intent)
+            }
         }
 
         searchBtn.setOnClickListener {
             ID_KEY = userIdText.text.toString()
-            val TOKEN = "token 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"
             Log.d("mytag", ID_KEY)
 
             val apiCallForData = apiService.getUser(ID_KEY, TOKEN)
@@ -61,9 +70,16 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     val errorId = response.code().toString()
                     Log.d("mytag", errorId)
-                    if(errorId.startsWith("4"))
+                    if(errorId.startsWith("4")) {
                         Toast.makeText(this@MainActivity, "유저가 없습니다.", Toast.LENGTH_SHORT).show()
+                        saveListBtn.visibility = View.GONE
+                        loginText.visibility = View.GONE
+                        profileImg.visibility = View.GONE
+                    }
                     else {
+                        saveListBtn.visibility = View.VISIBLE
+                        loginText.visibility = View.VISIBLE
+                        profileImg.visibility = View.VISIBLE
                         val data = response.body()
 //                    Log.d("my_tag", data.toString())
 
